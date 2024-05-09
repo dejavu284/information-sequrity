@@ -1,13 +1,20 @@
-import os
+import secrets
 import sys
-from typing import Any, Dict, List, Optional
+import time
+from typing import Any, Dict, List, Tuple, Union
 
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtGui, QtWidgets
 from PyQt5.QtCore import QRegExp
 from PyQt5.QtGui import QRegExpValidator
 from PyQt5.QtWidgets import QFileDialog, QTableWidgetItem
 
 from Cipher import BitwiseCipher, CaesarsCipher, Context, VigenereCipher
+from Euclid import (
+    EuclidAlgorithm,
+    EuclidAlgorithmDecomposition,
+    EuclidAlgorithmFindInverseValue,
+    EuclidAlgorithmFindLCD,
+)
 from view.ui import Ui_MainWindow
 
 # pyuic5.exe ui.ui -o ui.py
@@ -49,47 +56,15 @@ class Gui(QtWidgets.QMainWindow):
         regex = QRegExp("[А-Я]+")
         validator = QRegExpValidator(regex)
         self.ui.key.setValidator(validator)
-        self.ui.key.setPlaceholderText(
-            "Ключ должен состоять из ЗАГЛАВНЫХ букв русского алфавита"
-        )
-        self.ui.key_try.setPlaceholderText(
-            "Ключ должен состоять из ЗАГЛАВНЫХ букв русского алфавита"
-        )
+        self.ui.key.setPlaceholderText("ЗАГЛАВНЫЕ БУКВЫ")
+        self.ui.key_try.setPlaceholderText("ЗАГЛАВНЫЕ БУКВЫ")
         self.ui.key_try.setValidator(validator)
 
-    def load(self) -> None:
-        # Метод для открытия диалогового окна выбора файла
-        options = QFileDialog.Options()
-        filename, _ = QFileDialog.getOpenFileName(
-            None,
-            "Выбрать текстовый файл",
-            "./information_security/text",
-            "Text Files (*.txt);;All Files (*)",
-            options=options,
-        )
-        if filename:
-            with open(filename, "r", encoding="utf-8") as file:
-                file_content = file.read().upper()
-                self.input.setText(file_content)
-
-    def save(self) -> None:
-        # Метод для открытия диалогового окна выбора файла
-        options = QFileDialog.Options()
-        filename, _ = QFileDialog.getOpenFileName(
-            None,
-            "Выбрать текстовый файл",
-            "./information_security/text",
-            "Text Files (*.txt);;All Files (*)",
-            options=options,
-        )
-        if filename:
-            with open(filename, "w", encoding="utf-8") as file:
-                text = self.output.toPlainText()
-                file.write(text)
+        self.alg: EuclidAlgorithm
 
     def update(self, objects: List[Any]) -> Any:
         current_index = self.ui.tabWidget.currentIndex()
-        return objects[current_index]
+        return objects[current_index] if current_index < len(objects) else None
 
     def update_cipher(self) -> None:
         self.cipher = self.update([CaesarsCipher, VigenereCipher, BitwiseCipher])
@@ -112,21 +87,146 @@ class Gui(QtWidgets.QMainWindow):
             [self.ui.caesars_save, self.ui.vigenere_save, self.ui.bitwise_save]
         )
 
-        self.encode_button.disconnect()
-        self.decode_button.disconnect()
-        self.ui.caesars_cryptanalysis.disconnect()
-        self.ui.bitwise_visualize.disconnect()
-        self.ui.vigenere_visualize_entropy.disconnect()
-        self.load_button.disconnect()
-        self.save_button.disconnect()
+        # Cipher disconnect
+        if self.encode_button:
+            self.encode_button.disconnect()
+        if self.decode_button:
+            self.decode_button.disconnect()
+        if self.ui.caesars_cryptanalysis:
+            self.ui.caesars_cryptanalysis.disconnect()
+        if self.ui.bitwise_visualize:
+            self.ui.bitwise_visualize.disconnect()
+        if self.ui.vigenere_visualize_entropy:
+            self.ui.vigenere_visualize_entropy.disconnect()
+        if self.load_button:
+            self.load_button.disconnect()
+        if self.save_button:
+            self.save_button.disconnect()
 
-        self.encode_button.clicked.connect(self.encode)
-        self.decode_button.clicked.connect(self.decode)
-        self.ui.caesars_cryptanalysis.clicked.connect(self.cryptanalysis)
-        self.ui.bitwise_visualize.clicked.connect(self.visualize)
-        self.ui.vigenere_visualize_entropy.clicked.connect(self.entropy)
-        self.load_button.clicked.connect(self.load)
-        self.save_button.clicked.connect(self.save)
+        # Euclid disconnect
+        if self.ui.euclid_decompose_gcd:
+            self.ui.euclid_decompose_gcd.disconnect()
+        if self.ui.euclid_find_gcd:
+            self.ui.euclid_find_gcd.disconnect()
+        if self.ui.euclid_find_inverse:
+            self.ui.euclid_find_inverse.disconnect()
+        if self.ui.euclid_testing:
+            self.ui.euclid_testing.disconnect()
+
+        # Cipher connect
+        if self.encode_button:
+            self.encode_button.clicked.connect(self.encode)
+        if self.decode_button:
+            self.decode_button.clicked.connect(self.decode)
+        if self.ui.caesars_cryptanalysis:
+            self.ui.caesars_cryptanalysis.clicked.connect(self.cryptanalysis)
+        if self.ui.bitwise_visualize:
+            self.ui.bitwise_visualize.clicked.connect(self.visualize)
+        if self.ui.vigenere_visualize_entropy:
+            self.ui.vigenere_visualize_entropy.clicked.connect(self.entropy)
+        if self.load_button:
+            self.load_button.clicked.connect(self.load)
+        if self.save_button:
+            self.save_button.clicked.connect(self.save)
+
+        # Euclid connect
+        if self.ui.euclid_decompose_gcd:
+            self.ui.euclid_decompose_gcd.clicked.connect(self.decompose_gcd)
+        if self.ui.euclid_find_gcd:
+            self.ui.euclid_find_gcd.clicked.connect(self.find_gcd)
+        if self.ui.euclid_find_inverse:
+            self.ui.euclid_find_inverse.clicked.connect(self.find_inverse)
+        if self.ui.euclid_testing:
+            self.ui.euclid_testing.clicked.connect(self.testing_euclid)
+
+    def decompose_gcd(self) -> None:
+        field_a: int = int(self.ui.field_A.text())
+        field_b: int = int(self.ui.field_B.text())
+        self.alg = EuclidAlgorithmDecomposition(a=field_a, b=field_b)
+        result = self.alg.calc()
+        decomposition = f"u1 = {result[0]}; u2 = {result[1]}; u3 = {result[2]};"
+        self.ui.result_output.setText(decomposition)
+
+    def find_inverse(self) -> None:
+        field_a: int = int(self.ui.field_A.text())
+        field_b: int = int(self.ui.field_B.text())
+        self.alg = EuclidAlgorithmFindInverseValue(a=field_a, b=field_b)
+        result = self.alg.calc()
+        inverse_value = f"a^-1 = {result}"
+        self.ui.result_output.setText(inverse_value)
+
+    def find_gcd(self) -> None:
+        field_a: int = int(self.ui.field_A.text())
+        field_b: int = int(self.ui.field_B.text())
+        self.alg = EuclidAlgorithmFindLCD(a=field_a, b=field_b)
+        result = str(self.alg.calc())
+        self.ui.result_output.setText(result)
+
+    def testing_euclid(self) -> None:
+
+        def next_by_number_digits(digits: int) -> int:
+            max_value = 2**16 - 1
+            if digits == 1:
+                return secrets.randbelow(min(10, max_value))
+            range_start = 10 ** (digits - 1)
+            range_end = min((10**digits) - 1, max_value)
+            return secrets.randbelow(range_end - range_start + 1) + range_start
+
+        results: List[Tuple[int, int, int, Union[int, str], float]] = []
+        for digits in range(1, 6):
+            a = next_by_number_digits(digits)
+            b = next_by_number_digits(digits)
+            gcd_finder = EuclidAlgorithmFindLCD(a, b)
+            iter = 0
+
+            while gcd_finder.calc() != 1 & iter < 10000:
+                b = next_by_number_digits(digits)
+                gcd_finder = EuclidAlgorithmFindLCD(a, b)
+                iter += 1
+
+            if iter >= 10000:
+                results.append((digits, a, b, "Нет обратного", 0.0))
+
+            inverse_finder = EuclidAlgorithmFindInverseValue(a, b)
+            start_time = time.time()
+            result = inverse_finder.calc()
+            end_time = time.time()
+
+            elapsed_time = end_time - start_time
+            results.append((digits, a, b, result, elapsed_time))
+
+        testing_result = ""
+        for res in results:
+            testing_result += f"Digits: {res[0]}, A: {res[1]}, B: {res[2]}, Inverse: {res[3]}, Time: {res[4]:.6f} seconds\n\n"
+        self.ui.testing_output.setText(testing_result)
+
+    def load(self) -> None:
+        options = QFileDialog.Options()
+        filename, _ = QFileDialog.getOpenFileName(
+            None,
+            "Выбрать текстовый файл",
+            "./information_security/text",
+            "Text Files (*.txt);;All Files (*)",
+            options=options,
+        )
+        if filename:
+            with open(filename, "r", encoding="utf-8") as file:
+                file_content = file.read().upper()
+                self.input.setText(file_content)
+
+    def save(self) -> None:
+        options = QFileDialog.Options()
+        filename, _ = QFileDialog.getOpenFileName(
+            None,
+            "Выбрать текстовый файл",
+            "./information_security/text",
+            "Text Files (*.txt);;All Files (*)",
+            options=options,
+        )
+        if filename:
+            with open(filename, "w", encoding="utf-8") as file:
+                text = self.output.toPlainText()
+                file.write(text)
 
     def encode(self) -> None:
         if self.cipher == CaesarsCipher:
@@ -134,10 +234,8 @@ class Gui(QtWidgets.QMainWindow):
             self.context.set_cipher(self.cipher(shift))
 
         elif self.cipher == VigenereCipher:
-            key = self.ui.key.text()
-            if self.key_is_correct(key):
-                key = key.upper().strip()
-                self.context.set_cipher(self.cipher(key))
+            key = self.ui.key.text().upper().strip()
+            self.context.set_cipher(self.cipher(key))
 
         elif self.cipher == BitwiseCipher:
             self.context.set_cipher(self.cipher())
@@ -153,14 +251,12 @@ class Gui(QtWidgets.QMainWindow):
 
     def decode(self) -> None:
         if self.cipher == CaesarsCipher:
-            shift = self.tryParse(self.ui.shift_try.text())
+            shift = self.ui.shift_try.text()
             self.context.set_cipher(self.cipher(shift))
 
         elif self.cipher == VigenereCipher:
-            key = self.ui.key_try.text()
-            if self.key_is_correct(key):
-                key = key.upper().strip()
-                self.context.set_cipher(self.cipher(key))
+            key = self.ui.key_try.text().upper().strip()
+            self.context.set_cipher(self.cipher(key))
 
         elif self.cipher == BitwiseCipher:
             self.context.set_cipher(self.cipher())
@@ -200,10 +296,8 @@ class Gui(QtWidgets.QMainWindow):
         self.ui.tableWidget.setRowCount(num_rows)
         self.ui.tableWidget.setColumnCount(num_columns)
 
-        # Установка заголовков столбцов
         self.ui.tableWidget.setHorizontalHeaderLabels(data_list[0].keys())
 
-        # Заполнение таблицы данными
         for row, data_dict in enumerate(data_list):
             for column, key in enumerate(data_dict):
                 item = QTableWidgetItem(str(data_dict[key]))
@@ -237,32 +331,11 @@ class Gui(QtWidgets.QMainWindow):
                 if hasattr(self.context.cipher, "entropy"):
                     self.ui.vigenere_entropy.setText(str(self.context.cipher.entropy))
 
-    def shift_is_correct(self, shift: int) -> bool:
-        return shift != -1 and self.number_between(shift)
-
-    def key_is_correct(self, key: str) -> bool:
-        return key != "" and self.is_text(key)
-
-    def is_text(self, text: str) -> bool:
-        return False not in [
-            True if char in self.ALPHABET else False
-            for char in self.text_normalization(text)
-        ]
-
     def is_not_empty(self, text: str) -> bool:
         return self.text_normalization(text) != ""
 
     def text_normalization(self, text: str) -> str:
         return text.upper().strip()
-
-    def tryParse(self, string: str) -> int:
-        try:
-            return int(string)
-        except ValueError:
-            return -1
-
-    def number_between(self, number: int) -> bool:
-        return 1 <= number < 32
 
 
 if __name__ == "__main__":

@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(876, 558)
+        MainWindow.resize(1140, 662)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayout_17 = QtWidgets.QVBoxLayout(self.centralwidget)
@@ -519,11 +519,172 @@ class Ui_MainWindow(object):
         self.verticalLayout_16.addLayout(self.horizontalLayout_7)
         self.verticalLayout_18.addLayout(self.verticalLayout_16)
         self.tabWidget.addTab(self.tab, "")
+        self.tab_2 = QtWidgets.QWidget()
+        self.tab_2.setObjectName("tab_2")
+        self.horizontalLayout_13 = QtWidgets.QHBoxLayout(self.tab_2)
+        self.horizontalLayout_13.setObjectName("horizontalLayout_13")
+        self.verticalLayout_30 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_30.setObjectName("verticalLayout_30")
+        self.horizontalLayout_10 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_10.setObjectName("horizontalLayout_10")
+        self.verticalLayout_27 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_27.setObjectName("verticalLayout_27")
+        self.verticalLayout_28 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_28.setObjectName("verticalLayout_28")
+        self.label_14 = QtWidgets.QLabel(self.tab_2)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.label_14.setFont(font)
+        self.label_14.setAlignment(
+            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter
+        )
+        self.label_14.setObjectName("label_14")
+        self.verticalLayout_28.addWidget(self.label_14)
+        self.result_output = QtWidgets.QTextBrowser(self.tab_2)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding
+        )
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.result_output.sizePolicy().hasHeightForWidth()
+        )
+        self.result_output.setSizePolicy(sizePolicy)
+        self.result_output.setMaximumSize(QtCore.QSize(568, 16777215))
+        font = QtGui.QFont()
+        font.setPointSize(14)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
+        self.result_output.setFont(font)
+        self.result_output.setReadOnly(True)
+        self.result_output.setObjectName("result_output")
+        self.verticalLayout_28.addWidget(self.result_output)
+        self.verticalLayout_27.addLayout(self.verticalLayout_28)
+        self.horizontalLayout_11 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_11.setObjectName("horizontalLayout_11")
+        self.label_15 = QtWidgets.QLabel(self.tab_2)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.label_15.setFont(font)
+        self.label_15.setObjectName("label_15")
+        self.horizontalLayout_11.addWidget(self.label_15)
+        self.field_A = QtWidgets.QSpinBox(self.tab_2)
+        self.field_A.setButtonSymbols(QtWidgets.QAbstractSpinBox.NoButtons)
+        self.field_A.setMinimum(0)
+        self.field_A.setMaximum(65535)
+        self.field_A.setProperty("value", 1)
+        self.field_A.setObjectName("field_A")
+        self.horizontalLayout_11.addWidget(self.field_A)
+        self.verticalLayout_27.addLayout(self.horizontalLayout_11)
+        self.horizontalLayout_10.addLayout(self.verticalLayout_27)
+        self.verticalLayout_29 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_29.setObjectName("verticalLayout_29")
+        self.verticalLayout_31 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_31.setObjectName("verticalLayout_31")
+        self.label_17 = QtWidgets.QLabel(self.tab_2)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.label_17.setFont(font)
+        self.label_17.setAlignment(
+            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter
+        )
+        self.label_17.setObjectName("label_17")
+        self.verticalLayout_31.addWidget(self.label_17)
+        self.testing_output = QtWidgets.QTextBrowser(self.tab_2)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding
+        )
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.testing_output.sizePolicy().hasHeightForWidth()
+        )
+        self.testing_output.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.testing_output.setFont(font)
+        self.testing_output.setReadOnly(True)
+        self.testing_output.setObjectName("testing_output")
+        self.verticalLayout_31.addWidget(self.testing_output)
+        self.verticalLayout_29.addLayout(self.verticalLayout_31)
+        self.horizontalLayout_12 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_12.setObjectName("horizontalLayout_12")
+        self.label_16 = QtWidgets.QLabel(self.tab_2)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.label_16.setFont(font)
+        self.label_16.setObjectName("label_16")
+        self.horizontalLayout_12.addWidget(self.label_16)
+        self.field_B = QtWidgets.QSpinBox(self.tab_2)
+        self.field_B.setButtonSymbols(QtWidgets.QAbstractSpinBox.NoButtons)
+        self.field_B.setMinimum(0)
+        self.field_B.setMaximum(65535)
+        self.field_B.setProperty("value", 1)
+        self.field_B.setObjectName("field_B")
+        self.horizontalLayout_12.addWidget(self.field_B)
+        self.verticalLayout_29.addLayout(self.horizontalLayout_12)
+        self.horizontalLayout_10.addLayout(self.verticalLayout_29)
+        self.verticalLayout_30.addLayout(self.horizontalLayout_10)
+        self.euclid_find_gcd = QtWidgets.QPushButton(self.tab_2)
+        self.euclid_find_gcd.setEnabled(True)
+        font = QtGui.QFont()
+        font.setPointSize(20)
+        self.euclid_find_gcd.setFont(font)
+        self.euclid_find_gcd.setMouseTracking(True)
+        self.euclid_find_gcd.setStyleSheet(
+            "color: rgb(0, 0, 0);\n"
+            "background-color: rgb(120, 183, 140);\n"
+            "border-radius: 20px;\n"
+            "border: 2px solid #094065;"
+        )
+        self.euclid_find_gcd.setObjectName("euclid_find_gcd")
+        self.verticalLayout_30.addWidget(self.euclid_find_gcd)
+        self.euclid_decompose_gcd = QtWidgets.QPushButton(self.tab_2)
+        font = QtGui.QFont()
+        font.setPointSize(20)
+        self.euclid_decompose_gcd.setFont(font)
+        self.euclid_decompose_gcd.setStyleSheet(
+            "color: rgb(0, 0, 0);\n"
+            "background-color: rgb(120, 183, 140);\n"
+            "border-radius: 20px;\n"
+            "border: 2px solid #094065;"
+        )
+        self.euclid_decompose_gcd.setObjectName("euclid_decompose_gcd")
+        self.verticalLayout_30.addWidget(self.euclid_decompose_gcd)
+        self.euclid_find_inverse = QtWidgets.QPushButton(self.tab_2)
+        font = QtGui.QFont()
+        font.setPointSize(20)
+        self.euclid_find_inverse.setFont(font)
+        self.euclid_find_inverse.setStyleSheet(
+            "color: rgb(0, 0, 0);\n"
+            "background-color: rgb(120, 183, 140);\n"
+            "border-radius: 20px;\n"
+            "border: 2px solid #094065;"
+        )
+        self.euclid_find_inverse.setObjectName("euclid_find_inverse")
+        self.verticalLayout_30.addWidget(self.euclid_find_inverse)
+        self.euclid_testing = QtWidgets.QPushButton(self.tab_2)
+        self.euclid_testing.setEnabled(True)
+        font = QtGui.QFont()
+        font.setPointSize(20)
+        self.euclid_testing.setFont(font)
+        self.euclid_testing.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.euclid_testing.setStyleSheet(
+            "color: rgb(0, 0, 0);\n"
+            "background-color: rgb(120, 183, 140);\n"
+            "border-radius: 20px;\n"
+            "border: 2px solid #094065;"
+        )
+        self.euclid_testing.setObjectName("euclid_testing")
+        self.verticalLayout_30.addWidget(self.euclid_testing)
+        self.horizontalLayout_13.addLayout(self.verticalLayout_30)
+        self.tabWidget.addTab(self.tab_2, "")
         self.verticalLayout_17.addWidget(self.tabWidget)
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
-        self.tabWidget.setCurrentIndex(1)
+        self.tabWidget.setCurrentIndex(3)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -629,4 +790,36 @@ class Ui_MainWindow(object):
         self.tabWidget.setTabText(
             self.tabWidget.indexOf(self.tab),
             _translate("MainWindow", "Побитовые операции"),
+        )
+        self.label_14.setText(_translate("MainWindow", "Результат"))
+        self.result_output.setHtml(
+            _translate(
+                "MainWindow",
+                '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">\n'
+                '<html><head><meta name="qrichtext" content="1" /><style type="text/css">\n'
+                "p, li { white-space: pre-wrap; }\n"
+                "</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:14pt; font-weight:400; font-style:normal;\">\n"
+                '<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:600;"><br /></p></body></html>',
+            )
+        )
+        self.label_15.setText(_translate("MainWindow", "A"))
+        self.label_17.setText(_translate("MainWindow", "Анализ временных затрат"))
+        self.testing_output.setHtml(
+            _translate(
+                "MainWindow",
+                '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">\n'
+                '<html><head><meta name="qrichtext" content="1" /><style type="text/css">\n'
+                "p, li { white-space: pre-wrap; }\n"
+                "</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:12pt; font-weight:400; font-style:normal;\">\n"
+                '<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7.8pt;"><br /></p></body></html>',
+            )
+        )
+        self.label_16.setText(_translate("MainWindow", "B"))
+        self.euclid_find_gcd.setText(_translate("MainWindow", "Find GCD"))
+        self.euclid_decompose_gcd.setText(_translate("MainWindow", "Decompose GCD"))
+        self.euclid_find_inverse.setText(_translate("MainWindow", "Find Inverse"))
+        self.euclid_testing.setText(_translate("MainWindow", "Testing"))
+        self.tabWidget.setTabText(
+            self.tabWidget.indexOf(self.tab_2),
+            _translate("MainWindow", "Алгоритмы Евклида"),
         )
