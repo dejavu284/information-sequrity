@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1140, 662)
+        MainWindow.resize(1236, 830)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayout_17 = QtWidgets.QVBoxLayout(self.centralwidget)
@@ -680,11 +680,708 @@ class Ui_MainWindow(object):
         self.verticalLayout_30.addWidget(self.euclid_testing)
         self.horizontalLayout_13.addLayout(self.verticalLayout_30)
         self.tabWidget.addTab(self.tab_2, "")
+        self.tab_7 = QtWidgets.QWidget()
+        self.tab_7.setObjectName("tab_7")
+        self.gridLayout_2 = QtWidgets.QGridLayout(self.tab_7)
+        self.gridLayout_2.setObjectName("gridLayout_2")
+        self.verticalLayout_39 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_39.setObjectName("verticalLayout_39")
+        self.verticalLayout_38 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_38.setObjectName("verticalLayout_38")
+        self.label_24 = QtWidgets.QLabel(self.tab_7)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.label_24.setFont(font)
+        self.label_24.setObjectName("label_24")
+        self.verticalLayout_38.addWidget(self.label_24)
+        self.output_text = QtWidgets.QTextBrowser(self.tab_7)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding
+        )
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.output_text.sizePolicy().hasHeightForWidth())
+        self.output_text.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.output_text.setFont(font)
+        self.output_text.setReadOnly(True)
+        self.output_text.setObjectName("output_text")
+        self.verticalLayout_38.addWidget(self.output_text)
+        self.verticalLayout_39.addLayout(self.verticalLayout_38)
+        self.horizontalLayout_19 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_19.setObjectName("horizontalLayout_19")
+        self.horizontalLayout_17 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_17.setObjectName("horizontalLayout_17")
+        self.label_22 = QtWidgets.QLabel(self.tab_7)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.label_22.setFont(font)
+        self.label_22.setObjectName("label_22")
+        self.horizontalLayout_17.addWidget(self.label_22)
+        self.start_state_input = QtWidgets.QLineEdit(self.tab_7)
+        self.start_state_input.setReadOnly(True)
+        self.start_state_input.setObjectName("start_state_input")
+        self.horizontalLayout_17.addWidget(self.start_state_input)
+        self.horizontalLayout_19.addLayout(self.horizontalLayout_17)
+        self.horizontalLayout_18 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_18.setObjectName("horizontalLayout_18")
+        self.label_13 = QtWidgets.QLabel(self.tab_7)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.label_13.setFont(font)
+        self.label_13.setObjectName("label_13")
+        self.horizontalLayout_18.addWidget(self.label_13)
+        self.iterations_input = QtWidgets.QSpinBox(self.tab_7)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed
+        )
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.iterations_input.sizePolicy().hasHeightForWidth()
+        )
+        self.iterations_input.setSizePolicy(sizePolicy)
+        self.iterations_input.setMinimumSize(QtCore.QSize(140, 0))
+        self.iterations_input.setButtonSymbols(QtWidgets.QAbstractSpinBox.NoButtons)
+        self.iterations_input.setMinimum(1)
+        self.iterations_input.setMaximum(128)
+        self.iterations_input.setProperty("value", 1)
+        self.iterations_input.setObjectName("iterations_input")
+        self.horizontalLayout_18.addWidget(self.iterations_input)
+        self.horizontalLayout_19.addLayout(self.horizontalLayout_18)
+        self.verticalLayout_39.addLayout(self.horizontalLayout_19)
+        self.horizontalLayout_20 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_20.setObjectName("horizontalLayout_20")
+        self.verticalLayout_26 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_26.setObjectName("verticalLayout_26")
+        self.load_start_state = QtWidgets.QPushButton(self.tab_7)
+        font = QtGui.QFont()
+        font.setPointSize(20)
+        self.load_start_state.setFont(font)
+        self.load_start_state.setStyleSheet(
+            "color: rgb(0, 0, 0);\n"
+            "background-color: rgb(120, 183, 140);\n"
+            "border-radius: 20px;\n"
+            "border: 2px solid #094065;"
+        )
+        self.load_start_state.setObjectName("load_start_state")
+        self.verticalLayout_26.addWidget(self.load_start_state)
+        self.generate_start_state = QtWidgets.QPushButton(self.tab_7)
+        self.generate_start_state.setEnabled(True)
+        font = QtGui.QFont()
+        font.setPointSize(20)
+        self.generate_start_state.setFont(font)
+        self.generate_start_state.setMouseTracking(True)
+        self.generate_start_state.setStyleSheet(
+            "color: rgb(0, 0, 0);\n"
+            "background-color: rgb(120, 183, 140);\n"
+            "border-radius: 20px;\n"
+            "border: 2px solid #094065;"
+        )
+        self.generate_start_state.setObjectName("generate_start_state")
+        self.verticalLayout_26.addWidget(self.generate_start_state)
+        self.generate_nlfsr = QtWidgets.QPushButton(self.tab_7)
+        self.generate_nlfsr.setEnabled(True)
+        font = QtGui.QFont()
+        font.setPointSize(20)
+        self.generate_nlfsr.setFont(font)
+        self.generate_nlfsr.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.generate_nlfsr.setStyleSheet(
+            "color: rgb(0, 0, 0);\n"
+            "background-color: rgb(120, 183, 140);\n"
+            "border-radius: 20px;\n"
+            "border: 2px solid #094065;"
+        )
+        self.generate_nlfsr.setObjectName("generate_nlfsr")
+        self.verticalLayout_26.addWidget(self.generate_nlfsr)
+        self.horizontalLayout_20.addLayout(self.verticalLayout_26)
+        self.verticalLayout_37 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_37.setObjectName("verticalLayout_37")
+        self.save_result = QtWidgets.QPushButton(self.tab_7)
+        font = QtGui.QFont()
+        font.setPointSize(20)
+        self.save_result.setFont(font)
+        self.save_result.setStyleSheet(
+            "color: rgb(0, 0, 0);\n"
+            "background-color: rgb(120, 183, 140);\n"
+            "border-radius: 20px;\n"
+            "border: 2px solid #094065;"
+        )
+        self.save_result.setObjectName("save_result")
+        self.verticalLayout_37.addWidget(self.save_result)
+        self.save_start_state = QtWidgets.QPushButton(self.tab_7)
+        font = QtGui.QFont()
+        font.setPointSize(20)
+        self.save_start_state.setFont(font)
+        self.save_start_state.setMouseTracking(True)
+        self.save_start_state.setStyleSheet(
+            "color: rgb(0, 0, 0);\n"
+            "background-color: rgb(120, 183, 140);\n"
+            "border-radius: 20px;\n"
+            "border: 2px solid #094065;"
+        )
+        self.save_start_state.setObjectName("save_start_state")
+        self.verticalLayout_37.addWidget(self.save_start_state)
+        self.horizontalLayout_20.addLayout(self.verticalLayout_37)
+        self.verticalLayout_39.addLayout(self.horizontalLayout_20)
+        self.gridLayout_2.addLayout(self.verticalLayout_39, 0, 0, 1, 1)
+        self.tabWidget.addTab(self.tab_7, "")
+        self.tab_5 = QtWidgets.QWidget()
+        self.tab_5.setObjectName("tab_5")
+        self.gridLayout = QtWidgets.QGridLayout(self.tab_5)
+        self.gridLayout.setObjectName("gridLayout")
+        self.verticalLayout_32 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_32.setObjectName("verticalLayout_32")
+        self.horizontalLayout_14 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_14.setObjectName("horizontalLayout_14")
+        self.verticalLayout_33 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_33.setObjectName("verticalLayout_33")
+        self.verticalLayout_34 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_34.setObjectName("verticalLayout_34")
+        self.label_18 = QtWidgets.QLabel(self.tab_5)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.label_18.setFont(font)
+        self.label_18.setAlignment(
+            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter
+        )
+        self.label_18.setObjectName("label_18")
+        self.verticalLayout_34.addWidget(self.label_18)
+        self.prime_result_output = QtWidgets.QTextBrowser(self.tab_5)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding
+        )
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.prime_result_output.sizePolicy().hasHeightForWidth()
+        )
+        self.prime_result_output.setSizePolicy(sizePolicy)
+        self.prime_result_output.setMaximumSize(QtCore.QSize(16777215, 16777215))
+        font = QtGui.QFont()
+        font.setPointSize(14)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(50)
+        self.prime_result_output.setFont(font)
+        self.prime_result_output.setReadOnly(True)
+        self.prime_result_output.setObjectName("prime_result_output")
+        self.verticalLayout_34.addWidget(self.prime_result_output)
+        self.verticalLayout_33.addLayout(self.verticalLayout_34)
+        self.horizontalLayout_15 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_15.setObjectName("horizontalLayout_15")
+        spacerItem = QtWidgets.QSpacerItem(
+            40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
+        )
+        self.horizontalLayout_15.addItem(spacerItem)
+        self.prime_visualize = QtWidgets.QCheckBox(self.tab_5)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.prime_visualize.setFont(font)
+        self.prime_visualize.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.prime_visualize.setTristate(False)
+        self.prime_visualize.setObjectName("prime_visualize")
+        self.horizontalLayout_15.addWidget(self.prime_visualize)
+        spacerItem1 = QtWidgets.QSpacerItem(
+            40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
+        )
+        self.horizontalLayout_15.addItem(spacerItem1)
+        self.label_19 = QtWidgets.QLabel(self.tab_5)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.label_19.setFont(font)
+        self.label_19.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_19.setObjectName("label_19")
+        self.horizontalLayout_15.addWidget(self.label_19)
+        spacerItem2 = QtWidgets.QSpacerItem(
+            40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum
+        )
+        self.horizontalLayout_15.addItem(spacerItem2)
+        self.prime_input_number = QtWidgets.QSpinBox(self.tab_5)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed
+        )
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.prime_input_number.sizePolicy().hasHeightForWidth()
+        )
+        self.prime_input_number.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setPointSize(14)
+        self.prime_input_number.setFont(font)
+        self.prime_input_number.setButtonSymbols(QtWidgets.QAbstractSpinBox.NoButtons)
+        self.prime_input_number.setMinimum(0)
+        self.prime_input_number.setMaximum(65535)
+        self.prime_input_number.setProperty("value", 1)
+        self.prime_input_number.setObjectName("prime_input_number")
+        self.horizontalLayout_15.addWidget(self.prime_input_number)
+        self.verticalLayout_33.addLayout(self.horizontalLayout_15)
+        self.horizontalLayout_14.addLayout(self.verticalLayout_33)
+        self.verticalLayout_35 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_35.setObjectName("verticalLayout_35")
+        self.verticalLayout_36 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_36.setObjectName("verticalLayout_36")
+        self.label_20 = QtWidgets.QLabel(self.tab_5)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.label_20.setFont(font)
+        self.label_20.setAlignment(
+            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter
+        )
+        self.label_20.setObjectName("label_20")
+        self.verticalLayout_36.addWidget(self.label_20)
+        self.prime_testing_output = QtWidgets.QTextBrowser(self.tab_5)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding
+        )
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.prime_testing_output.sizePolicy().hasHeightForWidth()
+        )
+        self.prime_testing_output.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.prime_testing_output.setFont(font)
+        self.prime_testing_output.setReadOnly(True)
+        self.prime_testing_output.setObjectName("prime_testing_output")
+        self.verticalLayout_36.addWidget(self.prime_testing_output)
+        self.verticalLayout_35.addLayout(self.verticalLayout_36)
+        self.horizontalLayout_16 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_16.setObjectName("horizontalLayout_16")
+        self.verticalLayout_35.addLayout(self.horizontalLayout_16)
+        self.horizontalLayout_14.addLayout(self.verticalLayout_35)
+        self.verticalLayout_32.addLayout(self.horizontalLayout_14)
+        self.prime_check = QtWidgets.QPushButton(self.tab_5)
+        self.prime_check.setEnabled(True)
+        font = QtGui.QFont()
+        font.setPointSize(20)
+        self.prime_check.setFont(font)
+        self.prime_check.setMouseTracking(True)
+        self.prime_check.setStyleSheet(
+            "color: rgb(0, 0, 0);\n"
+            "background-color: rgb(120, 183, 140);\n"
+            "border-radius: 20px;\n"
+            "border: 2px solid #094065;"
+        )
+        self.prime_check.setObjectName("prime_check")
+        self.verticalLayout_32.addWidget(self.prime_check)
+        self.prime_testing = QtWidgets.QPushButton(self.tab_5)
+        self.prime_testing.setEnabled(True)
+        font = QtGui.QFont()
+        font.setPointSize(20)
+        self.prime_testing.setFont(font)
+        self.prime_testing.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.prime_testing.setStyleSheet(
+            "color: rgb(0, 0, 0);\n"
+            "background-color: rgb(120, 183, 140);\n"
+            "border-radius: 20px;\n"
+            "border: 2px solid #094065;"
+        )
+        self.prime_testing.setObjectName("prime_testing")
+        self.verticalLayout_32.addWidget(self.prime_testing)
+        self.gridLayout.addLayout(self.verticalLayout_32, 0, 0, 1, 1)
+        self.tabWidget.addTab(self.tab_5, "")
+        self.tab_6 = QtWidgets.QWidget()
+        self.tab_6.setObjectName("tab_6")
+        self.gridLayout_11 = QtWidgets.QGridLayout(self.tab_6)
+        self.gridLayout_11.setObjectName("gridLayout_11")
+        self.groupBox = QtWidgets.QGroupBox(self.tab_6)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(False)
+        font.setWeight(50)
+        self.groupBox.setFont(font)
+        self.groupBox.setObjectName("groupBox")
+        self.gridLayout_6 = QtWidgets.QGridLayout(self.groupBox)
+        self.gridLayout_6.setObjectName("gridLayout_6")
+        self.verticalLayout_25 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_25.setObjectName("verticalLayout_25")
+        self.groupBox_2 = QtWidgets.QGroupBox(self.groupBox)
+        self.groupBox_2.setObjectName("groupBox_2")
+        self.gridLayout_3 = QtWidgets.QGridLayout(self.groupBox_2)
+        self.gridLayout_3.setObjectName("gridLayout_3")
+        self.verticalLayout_22 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_22.setObjectName("verticalLayout_22")
+        self.generate_primes_button = QtWidgets.QPushButton(self.groupBox_2)
+        self.generate_primes_button.setEnabled(True)
+        font = QtGui.QFont()
+        font.setPointSize(20)
+        self.generate_primes_button.setFont(font)
+        self.generate_primes_button.setMouseTracking(True)
+        self.generate_primes_button.setStyleSheet(
+            "color: rgb(0, 0, 0);\n"
+            "background-color: rgb(120, 183, 140);\n"
+            "border-radius: 20px;\n"
+            "border: 2px solid #094065;"
+        )
+        self.generate_primes_button.setObjectName("generate_primes_button")
+        self.verticalLayout_22.addWidget(self.generate_primes_button)
+        self.horizontalLayout_22 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_22.setObjectName("horizontalLayout_22")
+        self.horizontalLayout_9 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_9.setObjectName("horizontalLayout_9")
+        self.label_31 = QtWidgets.QLabel(self.groupBox_2)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(False)
+        font.setWeight(50)
+        self.label_31.setFont(font)
+        self.label_31.setAlignment(
+            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter
+        )
+        self.label_31.setObjectName("label_31")
+        self.horizontalLayout_9.addWidget(self.label_31)
+        self.prime_p = QtWidgets.QLineEdit(self.groupBox_2)
+        self.prime_p.setObjectName("prime_p")
+        self.horizontalLayout_9.addWidget(self.prime_p)
+        self.horizontalLayout_22.addLayout(self.horizontalLayout_9)
+        self.verticalLayout_22.addLayout(self.horizontalLayout_22)
+        self.horizontalLayout_21 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_21.setObjectName("horizontalLayout_21")
+        self.label_32 = QtWidgets.QLabel(self.groupBox_2)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(False)
+        font.setWeight(50)
+        self.label_32.setFont(font)
+        self.label_32.setAlignment(
+            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter
+        )
+        self.label_32.setObjectName("label_32")
+        self.horizontalLayout_21.addWidget(self.label_32)
+        self.prime_q = QtWidgets.QLineEdit(self.groupBox_2)
+        self.prime_q.setObjectName("prime_q")
+        self.horizontalLayout_21.addWidget(self.prime_q)
+        self.verticalLayout_22.addLayout(self.horizontalLayout_21)
+        self.generate_keys_button = QtWidgets.QPushButton(self.groupBox_2)
+        self.generate_keys_button.setEnabled(True)
+        font = QtGui.QFont()
+        font.setPointSize(20)
+        self.generate_keys_button.setFont(font)
+        self.generate_keys_button.setMouseTracking(True)
+        self.generate_keys_button.setStyleSheet(
+            "color: rgb(0, 0, 0);\n"
+            "background-color: rgb(120, 183, 140);\n"
+            "border-radius: 20px;\n"
+            "border: 2px solid #094065;"
+        )
+        self.generate_keys_button.setObjectName("generate_keys_button")
+        self.verticalLayout_22.addWidget(self.generate_keys_button)
+        self.horizontalLayout_23 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_23.setObjectName("horizontalLayout_23")
+        self.label_33 = QtWidgets.QLabel(self.groupBox_2)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(False)
+        font.setWeight(50)
+        self.label_33.setFont(font)
+        self.label_33.setAlignment(
+            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter
+        )
+        self.label_33.setObjectName("label_33")
+        self.horizontalLayout_23.addWidget(self.label_33)
+        self.public_n = QtWidgets.QLineEdit(self.groupBox_2)
+        self.public_n.setObjectName("public_n")
+        self.horizontalLayout_23.addWidget(self.public_n)
+        self.verticalLayout_22.addLayout(self.horizontalLayout_23)
+        self.horizontalLayout_24 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_24.setObjectName("horizontalLayout_24")
+        self.label_34 = QtWidgets.QLabel(self.groupBox_2)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(False)
+        font.setWeight(50)
+        self.label_34.setFont(font)
+        self.label_34.setAlignment(
+            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter
+        )
+        self.label_34.setObjectName("label_34")
+        self.horizontalLayout_24.addWidget(self.label_34)
+        self.phi_n = QtWidgets.QLineEdit(self.groupBox_2)
+        self.phi_n.setReadOnly(True)
+        self.phi_n.setObjectName("phi_n")
+        self.horizontalLayout_24.addWidget(self.phi_n)
+        self.verticalLayout_22.addLayout(self.horizontalLayout_24)
+        self.horizontalLayout_25 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_25.setObjectName("horizontalLayout_25")
+        self.label_35 = QtWidgets.QLabel(self.groupBox_2)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(False)
+        font.setWeight(50)
+        self.label_35.setFont(font)
+        self.label_35.setAlignment(
+            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter
+        )
+        self.label_35.setObjectName("label_35")
+        self.horizontalLayout_25.addWidget(self.label_35)
+        self.public_e = QtWidgets.QLineEdit(self.groupBox_2)
+        self.public_e.setReadOnly(True)
+        self.public_e.setObjectName("public_e")
+        self.horizontalLayout_25.addWidget(self.public_e)
+        self.verticalLayout_22.addLayout(self.horizontalLayout_25)
+        self.horizontalLayout_26 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_26.setObjectName("horizontalLayout_26")
+        self.label_36 = QtWidgets.QLabel(self.groupBox_2)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(False)
+        font.setWeight(50)
+        self.label_36.setFont(font)
+        self.label_36.setAlignment(
+            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter
+        )
+        self.label_36.setObjectName("label_36")
+        self.horizontalLayout_26.addWidget(self.label_36)
+        self.private_d = QtWidgets.QLineEdit(self.groupBox_2)
+        self.private_d.setReadOnly(True)
+        self.private_d.setObjectName("private_d")
+        self.horizontalLayout_26.addWidget(self.private_d)
+        self.verticalLayout_22.addLayout(self.horizontalLayout_26)
+        self.gridLayout_3.addLayout(self.verticalLayout_22, 0, 0, 1, 1)
+        self.verticalLayout_25.addWidget(self.groupBox_2)
+        self.groupBox_3 = QtWidgets.QGroupBox(self.groupBox)
+        self.groupBox_3.setObjectName("groupBox_3")
+        self.gridLayout_4 = QtWidgets.QGridLayout(self.groupBox_3)
+        self.gridLayout_4.setObjectName("gridLayout_4")
+        self.verticalLayout_23 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_23.setObjectName("verticalLayout_23")
+        self.horizontalLayout_27 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_27.setObjectName("horizontalLayout_27")
+        self.label_37 = QtWidgets.QLabel(self.groupBox_3)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(False)
+        font.setWeight(50)
+        self.label_37.setFont(font)
+        self.label_37.setAlignment(
+            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter
+        )
+        self.label_37.setObjectName("label_37")
+        self.horizontalLayout_27.addWidget(self.label_37)
+        self.message_to_encrypt = QtWidgets.QLineEdit(self.groupBox_3)
+        self.message_to_encrypt.setObjectName("message_to_encrypt")
+        self.horizontalLayout_27.addWidget(self.message_to_encrypt)
+        self.verticalLayout_23.addLayout(self.horizontalLayout_27)
+        self.encrypt_message_button = QtWidgets.QPushButton(self.groupBox_3)
+        self.encrypt_message_button.setEnabled(True)
+        font = QtGui.QFont()
+        font.setPointSize(20)
+        self.encrypt_message_button.setFont(font)
+        self.encrypt_message_button.setMouseTracking(True)
+        self.encrypt_message_button.setStyleSheet(
+            "color: rgb(0, 0, 0);\n"
+            "background-color: rgb(120, 183, 140);\n"
+            "border-radius: 20px;\n"
+            "border: 2px solid #094065;"
+        )
+        self.encrypt_message_button.setObjectName("encrypt_message_button")
+        self.verticalLayout_23.addWidget(self.encrypt_message_button)
+        self.horizontalLayout_28 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_28.setObjectName("horizontalLayout_28")
+        self.label_38 = QtWidgets.QLabel(self.groupBox_3)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(False)
+        font.setWeight(50)
+        self.label_38.setFont(font)
+        self.label_38.setAlignment(
+            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter
+        )
+        self.label_38.setObjectName("label_38")
+        self.horizontalLayout_28.addWidget(self.label_38)
+        self.encrypted_message = QtWidgets.QLineEdit(self.groupBox_3)
+        self.encrypted_message.setText("")
+        self.encrypted_message.setReadOnly(True)
+        self.encrypted_message.setObjectName("encrypted_message")
+        self.horizontalLayout_28.addWidget(self.encrypted_message)
+        self.verticalLayout_23.addLayout(self.horizontalLayout_28)
+        self.gridLayout_4.addLayout(self.verticalLayout_23, 0, 0, 1, 1)
+        self.verticalLayout_25.addWidget(self.groupBox_3)
+        self.groupBox_4 = QtWidgets.QGroupBox(self.groupBox)
+        self.groupBox_4.setObjectName("groupBox_4")
+        self.gridLayout_5 = QtWidgets.QGridLayout(self.groupBox_4)
+        self.gridLayout_5.setObjectName("gridLayout_5")
+        self.verticalLayout_24 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_24.setObjectName("verticalLayout_24")
+        self.save_keys_button = QtWidgets.QPushButton(self.groupBox_4)
+        self.save_keys_button.setEnabled(True)
+        font = QtGui.QFont()
+        font.setPointSize(20)
+        self.save_keys_button.setFont(font)
+        self.save_keys_button.setMouseTracking(True)
+        self.save_keys_button.setStyleSheet(
+            "color: rgb(0, 0, 0);\n"
+            "background-color: rgb(120, 183, 140);\n"
+            "border-radius: 20px;\n"
+            "border: 2px solid #094065;"
+        )
+        self.save_keys_button.setObjectName("save_keys_button")
+        self.verticalLayout_24.addWidget(self.save_keys_button)
+        self.save_encrypted_message_button = QtWidgets.QPushButton(self.groupBox_4)
+        self.save_encrypted_message_button.setEnabled(True)
+        font = QtGui.QFont()
+        font.setPointSize(20)
+        self.save_encrypted_message_button.setFont(font)
+        self.save_encrypted_message_button.setMouseTracking(True)
+        self.save_encrypted_message_button.setStyleSheet(
+            "color: rgb(0, 0, 0);\n"
+            "background-color: rgb(120, 183, 140);\n"
+            "border-radius: 20px;\n"
+            "border: 2px solid #094065;"
+        )
+        self.save_encrypted_message_button.setObjectName(
+            "save_encrypted_message_button"
+        )
+        self.verticalLayout_24.addWidget(self.save_encrypted_message_button)
+        self.gridLayout_5.addLayout(self.verticalLayout_24, 0, 0, 1, 1)
+        self.verticalLayout_25.addWidget(self.groupBox_4)
+        self.gridLayout_6.addLayout(self.verticalLayout_25, 0, 0, 1, 1)
+        self.gridLayout_11.addWidget(self.groupBox, 0, 0, 1, 1)
+        self.groupBox_5 = QtWidgets.QGroupBox(self.tab_6)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.groupBox_5.setFont(font)
+        self.groupBox_5.setObjectName("groupBox_5")
+        self.gridLayout_10 = QtWidgets.QGridLayout(self.groupBox_5)
+        self.gridLayout_10.setObjectName("gridLayout_10")
+        self.groupBox_6 = QtWidgets.QGroupBox(self.groupBox_5)
+        self.groupBox_6.setObjectName("groupBox_6")
+        self.gridLayout_7 = QtWidgets.QGridLayout(self.groupBox_6)
+        self.gridLayout_7.setObjectName("gridLayout_7")
+        self.horizontalLayout_31 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_31.setObjectName("horizontalLayout_31")
+        self.horizontalLayout_29 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_29.setObjectName("horizontalLayout_29")
+        self.label_40 = QtWidgets.QLabel(self.groupBox_6)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.label_40.setFont(font)
+        self.label_40.setAlignment(
+            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter
+        )
+        self.label_40.setObjectName("label_40")
+        self.horizontalLayout_29.addWidget(self.label_40)
+        self.receiver_public_n = QtWidgets.QLineEdit(self.groupBox_6)
+        self.receiver_public_n.setReadOnly(False)
+        self.receiver_public_n.setObjectName("receiver_public_n")
+        self.horizontalLayout_29.addWidget(self.receiver_public_n)
+        self.horizontalLayout_31.addLayout(self.horizontalLayout_29)
+        self.gridLayout_7.addLayout(self.horizontalLayout_31, 1, 0, 1, 1)
+        self.load_keys_button = QtWidgets.QPushButton(self.groupBox_6)
+        self.load_keys_button.setEnabled(True)
+        font = QtGui.QFont()
+        font.setPointSize(20)
+        self.load_keys_button.setFont(font)
+        self.load_keys_button.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.load_keys_button.setStyleSheet(
+            "color: rgb(0, 0, 0);\n"
+            "background-color: rgb(120, 183, 140);\n"
+            "border-radius: 20px;\n"
+            "border: 2px solid #094065;"
+        )
+        self.load_keys_button.setObjectName("load_keys_button")
+        self.gridLayout_7.addWidget(self.load_keys_button, 0, 0, 1, 1)
+        self.gridLayout_10.addWidget(self.groupBox_6, 0, 0, 1, 1)
+        self.groupBox_7 = QtWidgets.QGroupBox(self.groupBox_5)
+        self.groupBox_7.setObjectName("groupBox_7")
+        self.gridLayout_8 = QtWidgets.QGridLayout(self.groupBox_7)
+        self.gridLayout_8.setObjectName("gridLayout_8")
+        self.load_encrypted_message_button = QtWidgets.QPushButton(self.groupBox_7)
+        self.load_encrypted_message_button.setEnabled(True)
+        font = QtGui.QFont()
+        font.setPointSize(20)
+        self.load_encrypted_message_button.setFont(font)
+        self.load_encrypted_message_button.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.load_encrypted_message_button.setStyleSheet(
+            "color: rgb(0, 0, 0);\n"
+            "background-color: rgb(120, 183, 140);\n"
+            "border-radius: 20px;\n"
+            "border: 2px solid #094065;"
+        )
+        self.load_encrypted_message_button.setObjectName(
+            "load_encrypted_message_button"
+        )
+        self.gridLayout_8.addWidget(self.load_encrypted_message_button, 0, 0, 1, 1)
+        self.horizontalLayout_32 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_32.setObjectName("horizontalLayout_32")
+        self.label_41 = QtWidgets.QLabel(self.groupBox_7)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.label_41.setFont(font)
+        self.label_41.setAlignment(
+            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter
+        )
+        self.label_41.setObjectName("label_41")
+        self.horizontalLayout_32.addWidget(self.label_41)
+        self.receiver_encrypted_message = QtWidgets.QLineEdit(self.groupBox_7)
+        self.receiver_encrypted_message.setText("")
+        self.receiver_encrypted_message.setReadOnly(True)
+        self.receiver_encrypted_message.setObjectName("receiver_encrypted_message")
+        self.horizontalLayout_32.addWidget(self.receiver_encrypted_message)
+        self.gridLayout_8.addLayout(self.horizontalLayout_32, 1, 0, 1, 1)
+        self.gridLayout_10.addWidget(self.groupBox_7, 1, 0, 1, 1)
+        self.groupBox_8 = QtWidgets.QGroupBox(self.groupBox_5)
+        self.groupBox_8.setObjectName("groupBox_8")
+        self.gridLayout_9 = QtWidgets.QGridLayout(self.groupBox_8)
+        self.gridLayout_9.setObjectName("gridLayout_9")
+        self.horizontalLayout_35 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_35.setObjectName("horizontalLayout_35")
+        self.label_44 = QtWidgets.QLabel(self.groupBox_8)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.label_44.setFont(font)
+        self.label_44.setAlignment(
+            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter
+        )
+        self.label_44.setObjectName("label_44")
+        self.horizontalLayout_35.addWidget(self.label_44)
+        self.decrypted_message = QtWidgets.QLineEdit(self.groupBox_8)
+        self.decrypted_message.setText("")
+        self.decrypted_message.setReadOnly(True)
+        self.decrypted_message.setObjectName("decrypted_message")
+        self.horizontalLayout_35.addWidget(self.decrypted_message)
+        self.gridLayout_9.addLayout(self.horizontalLayout_35, 3, 0, 1, 1)
+        self.horizontalLayout_33 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_33.setObjectName("horizontalLayout_33")
+        self.label_42 = QtWidgets.QLabel(self.groupBox_8)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.label_42.setFont(font)
+        self.label_42.setAlignment(
+            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter
+        )
+        self.label_42.setObjectName("label_42")
+        self.horizontalLayout_33.addWidget(self.label_42)
+        self.receiver_private_d = QtWidgets.QLineEdit(self.groupBox_8)
+        self.receiver_private_d.setObjectName("receiver_private_d")
+        self.horizontalLayout_33.addWidget(self.receiver_private_d)
+        self.gridLayout_9.addLayout(self.horizontalLayout_33, 0, 0, 1, 1)
+        self.decrypt_message_button = QtWidgets.QPushButton(self.groupBox_8)
+        self.decrypt_message_button.setEnabled(True)
+        font = QtGui.QFont()
+        font.setPointSize(20)
+        self.decrypt_message_button.setFont(font)
+        self.decrypt_message_button.setMouseTracking(True)
+        self.decrypt_message_button.setStyleSheet(
+            "color: rgb(0, 0, 0);\n"
+            "background-color: rgb(120, 183, 140);\n"
+            "border-radius: 20px;\n"
+            "border: 2px solid #094065;"
+        )
+        self.decrypt_message_button.setObjectName("decrypt_message_button")
+        self.gridLayout_9.addWidget(self.decrypt_message_button, 2, 0, 1, 1)
+        self.gridLayout_10.addWidget(self.groupBox_8, 2, 0, 1, 1)
+        self.gridLayout_11.addWidget(self.groupBox_5, 0, 1, 1, 1)
+        self.tabWidget.addTab(self.tab_6, "")
         self.verticalLayout_17.addWidget(self.tabWidget)
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
-        self.tabWidget.setCurrentIndex(3)
+        self.tabWidget.setCurrentIndex(6)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -822,4 +1519,97 @@ class Ui_MainWindow(object):
         self.tabWidget.setTabText(
             self.tabWidget.indexOf(self.tab_2),
             _translate("MainWindow", "Алгоритмы Евклида"),
+        )
+        self.label_24.setText(_translate("MainWindow", "Выходной текст"))
+        self.output_text.setHtml(
+            _translate(
+                "MainWindow",
+                '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">\n'
+                '<html><head><meta name="qrichtext" content="1" /><style type="text/css">\n'
+                "p, li { white-space: pre-wrap; }\n"
+                "</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:12pt; font-weight:400; font-style:normal;\">\n"
+                '<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7.8pt;"><br /></p></body></html>',
+            )
+        )
+        self.label_22.setText(_translate("MainWindow", "Начальное состояние"))
+        self.label_13.setText(_translate("MainWindow", "Количество итераций"))
+        self.load_start_state.setText(_translate("MainWindow", "Load start state"))
+        self.generate_start_state.setText(
+            _translate("MainWindow", "Generate start state")
+        )
+        self.generate_nlfsr.setText(_translate("MainWindow", "Generate NLFSR"))
+        self.save_result.setText(_translate("MainWindow", "Save result"))
+        self.save_start_state.setText(_translate("MainWindow", "Save start state"))
+        self.tabWidget.setTabText(
+            self.tabWidget.indexOf(self.tab_7),
+            _translate("MainWindow", "Генератор ПСП"),
+        )
+        self.label_18.setText(_translate("MainWindow", "Результат"))
+        self.prime_result_output.setHtml(
+            _translate(
+                "MainWindow",
+                '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">\n'
+                '<html><head><meta name="qrichtext" content="1" /><style type="text/css">\n'
+                "p, li { white-space: pre-wrap; }\n"
+                "</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:14pt; font-weight:400; font-style:normal;\">\n"
+                '<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:600;"><br /></p></body></html>',
+            )
+        )
+        self.prime_visualize.setText(_translate("MainWindow", "Visualize"))
+        self.label_19.setText(_translate("MainWindow", "Введите число"))
+        self.label_20.setText(_translate("MainWindow", "Анализ временных затрат"))
+        self.prime_testing_output.setHtml(
+            _translate(
+                "MainWindow",
+                '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">\n'
+                '<html><head><meta name="qrichtext" content="1" /><style type="text/css">\n'
+                "p, li { white-space: pre-wrap; }\n"
+                "</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:12pt; font-weight:400; font-style:normal;\">\n"
+                '<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:7.8pt;"><br /></p></body></html>',
+            )
+        )
+        self.prime_check.setText(_translate("MainWindow", "Check"))
+        self.prime_testing.setText(_translate("MainWindow", "Testing"))
+        self.tabWidget.setTabText(
+            self.tabWidget.indexOf(self.tab_5),
+            _translate("MainWindow", "Простые числа"),
+        )
+        self.groupBox.setTitle(_translate("MainWindow", "Отправитель"))
+        self.groupBox_2.setTitle(_translate("MainWindow", "Генерация ключей"))
+        self.generate_primes_button.setText(
+            _translate("MainWindow", "Generate primes p and q")
+        )
+        self.label_31.setText(_translate("MainWindow", "Простое число p"))
+        self.label_32.setText(_translate("MainWindow", "Простое число q"))
+        self.generate_keys_button.setText(_translate("MainWindow", "Generate keys"))
+        self.label_33.setText(_translate("MainWindow", "Открытый ключ n"))
+        self.label_34.setText(_translate("MainWindow", "Функция эйлера f(n)"))
+        self.label_35.setText(_translate("MainWindow", "Открытый ключ e"))
+        self.label_36.setText(_translate("MainWindow", "Закрытый ключ d"))
+        self.groupBox_3.setTitle(_translate("MainWindow", "Шифрование сообщения"))
+        self.label_37.setText(_translate("MainWindow", "Сообщение для шифрования"))
+        self.encrypt_message_button.setText(_translate("MainWindow", "Encrypt message"))
+        self.label_38.setText(_translate("MainWindow", "Зашифрованное сообщение"))
+        self.groupBox_4.setTitle(_translate("MainWindow", "Сохранение данных"))
+        self.save_keys_button.setText(_translate("MainWindow", "Save keys"))
+        self.save_encrypted_message_button.setText(
+            _translate("MainWindow", "Save encrypted message")
+        )
+        self.groupBox_5.setTitle(_translate("MainWindow", "Получатель"))
+        self.groupBox_6.setTitle(_translate("MainWindow", "Загрузка ключей"))
+        self.label_40.setText(_translate("MainWindow", "Открытый ключ n"))
+        self.load_keys_button.setText(_translate("MainWindow", "Load keys"))
+        self.groupBox_7.setTitle(
+            _translate("MainWindow", "Загрузка зашифрованного сообщения")
+        )
+        self.load_encrypted_message_button.setText(
+            _translate("MainWindow", "Load encrypted message")
+        )
+        self.label_41.setText(_translate("MainWindow", "Зашифрованное сообщение"))
+        self.groupBox_8.setTitle(_translate("MainWindow", "Дешифрование сообщения"))
+        self.label_44.setText(_translate("MainWindow", "Расшифрованное сообщение"))
+        self.label_42.setText(_translate("MainWindow", "Закрытый ключ d"))
+        self.decrypt_message_button.setText(_translate("MainWindow", "Decrypt"))
+        self.tabWidget.setTabText(
+            self.tabWidget.indexOf(self.tab_6), _translate("MainWindow", "RSA")
         )

@@ -1,20 +1,27 @@
+import random
 import secrets
 import sys
 import time
 from typing import Any, Dict, List, Tuple, Union
 
+import matplotlib.pyplot as plt
+import sympy
 from PyQt5 import QtGui, QtWidgets
 from PyQt5.QtCore import QRegExp
 from PyQt5.QtGui import QRegExpValidator
-from PyQt5.QtWidgets import QFileDialog, QTableWidgetItem
+from PyQt5.QtWidgets import QFileDialog, QMessageBox, QTableWidgetItem
+from sympy import randprime
 
-from Cipher import BitwiseCipher, CaesarsCipher, Context, VigenereCipher
-from Euclid import (
+from src.Cipher import BitwiseCipher, CaesarsCipher, Context, VigenereCipher
+from src.Euclid import (
     EuclidAlgorithm,
     EuclidAlgorithmDecomposition,
     EuclidAlgorithmFindInverseValue,
     EuclidAlgorithmFindLCD,
 )
+from src.NLFSR import NLFSR
+from src.Prime import RabinMiller
+from src.RSA import RSA
 from view.ui import Ui_MainWindow
 
 # pyuic5.exe ui.ui -o ui.py
@@ -69,10 +76,24 @@ class Gui(QtWidgets.QMainWindow):
     def update_cipher(self) -> None:
         self.cipher = self.update([CaesarsCipher, VigenereCipher, BitwiseCipher])
         self.input = self.update(
-            [self.ui.caesars_input, self.ui.vigenere_input, self.ui.bitwise_input]
+            [
+                self.ui.caesars_input,
+                self.ui.vigenere_input,
+                self.ui.bitwise_input,
+                None,
+                self.ui.start_state_input,
+                None,
+            ]
         )
         self.output = self.update(
-            [self.ui.caesars_output, self.ui.vigenere_output, self.ui.bitwise_output]
+            [
+                self.ui.caesars_output,
+                self.ui.vigenere_output,
+                self.ui.bitwise_output,
+                None,
+                self.ui.output_text,
+                None,
+            ]
         )
         self.encode_button = self.update(
             [self.ui.caesars_encode, self.ui.vigenere_encode, self.ui.bitwise_encode]
@@ -81,10 +102,24 @@ class Gui(QtWidgets.QMainWindow):
             [self.ui.caesars_decode, self.ui.vigenere_decode, self.ui.bitwise_decode]
         )
         self.load_button = self.update(
-            [self.ui.caesars_load, self.ui.vigenere_load, self.ui.bitwise_load]
+            [
+                self.ui.caesars_load,
+                self.ui.vigenere_load,
+                self.ui.bitwise_load,
+                None,
+                self.ui.load_start_state,
+                None,
+            ]
         )
         self.save_button = self.update(
-            [self.ui.caesars_save, self.ui.vigenere_save, self.ui.bitwise_save]
+            [
+                self.ui.caesars_save,
+                self.ui.vigenere_save,
+                self.ui.bitwise_save,
+                None,
+                self.ui.save_result,
+                None,
+            ]
         )
 
         # Cipher disconnect
@@ -113,6 +148,39 @@ class Gui(QtWidgets.QMainWindow):
         if self.ui.euclid_testing:
             self.ui.euclid_testing.disconnect()
 
+        # NLFSR disconnect
+        if self.ui.generate_start_state:
+            self.ui.generate_start_state.disconnect()
+        if self.ui.generate_nlfsr:
+            self.ui.generate_nlfsr.disconnect()
+        if self.ui.save_start_state:
+            self.ui.save_start_state.disconnect()
+
+        # Prime disconnect
+        if self.ui.prime_check:
+            self.ui.prime_check.disconnect()
+        if self.ui.prime_testing:
+            self.ui.prime_testing.disconnect()
+
+        # RSA connect
+        if self.ui.generate_keys_button:
+            self.ui.generate_keys_button.disconnect()
+        if self.ui.generate_primes_button:
+            self.ui.generate_primes_button.disconnect()
+        if self.ui.encrypt_message_button:
+            self.ui.encrypt_message_button.disconnect()
+        if self.ui.save_keys_button:
+            self.ui.save_keys_button.disconnect()
+        if self.ui.save_encrypted_message_button:
+            self.ui.save_encrypted_message_button.disconnect()
+
+        if self.ui.load_keys_button:
+            self.ui.load_keys_button.disconnect()
+        if self.ui.load_encrypted_message_button:
+            self.ui.load_encrypted_message_button.disconnect()
+        if self.ui.decrypt_message_button:
+            self.ui.decrypt_message_button.disconnect()
+
         # Cipher connect
         if self.encode_button:
             self.encode_button.clicked.connect(self.encode)
@@ -138,6 +206,277 @@ class Gui(QtWidgets.QMainWindow):
             self.ui.euclid_find_inverse.clicked.connect(self.find_inverse)
         if self.ui.euclid_testing:
             self.ui.euclid_testing.clicked.connect(self.testing_euclid)
+
+        # NLFSR connect
+        if self.ui.generate_start_state:
+            self.ui.generate_start_state.clicked.connect(self.generate_start_state)
+        if self.ui.generate_nlfsr:
+            self.ui.generate_nlfsr.clicked.connect(self.generate_and_display)
+        if self.ui.save_start_state:
+            self.ui.save_start_state.clicked.connect(self.save_seed)
+
+        # Prime connect
+        if self.ui.prime_check:
+            self.ui.prime_check.clicked.connect(self.prime_check)
+        if self.ui.prime_testing:
+            self.ui.prime_testing.clicked.connect(self.prime_testing)
+
+        # RSA connect
+        if self.ui.generate_keys_button:
+            self.ui.generate_keys_button.clicked.connect(self.generate_keys)
+        if self.ui.generate_primes_button:
+            self.ui.generate_primes_button.clicked.connect(self.generate_primes)
+        if self.ui.encrypt_message_button:
+            self.ui.encrypt_message_button.clicked.connect(self.encrypt_message)
+        if self.ui.save_keys_button:
+            self.ui.save_keys_button.clicked.connect(self.save_keys)
+        if self.ui.save_encrypted_message_button:
+            self.ui.save_encrypted_message_button.clicked.connect(
+                self.save_encrypted_message
+            )
+
+        if self.ui.load_keys_button:
+            self.ui.load_keys_button.clicked.connect(self.load_keys)
+        if self.ui.load_encrypted_message_button:
+            self.ui.load_encrypted_message_button.clicked.connect(
+                self.load_encrypted_message
+            )
+        if self.ui.decrypt_message_button:
+            self.ui.decrypt_message_button.clicked.connect(self.decrypt_message)
+
+    def generate_primes(self):
+        try:
+            p = sympy.randprime(
+                2**10, 2**11
+            )  # Генерация простого числа с длиной в 10-11 бит
+            q = sympy.randprime(2**10, 2**11)
+            self.ui.prime_p.setText(str(p))
+            self.ui.prime_q.setText(str(q))
+        except ValueError as ve:
+            QMessageBox.critical(self, "Ошибка", str(ve))
+
+    def generate_keys(self):
+        try:
+            p_text = self.ui.prime_p.text()
+            q_text = self.ui.prime_q.text()
+
+            if not p_text.isdigit() or not q_text.isdigit():
+                raise ValueError("Числа p и q должны быть целыми числами")
+
+            p = int(p_text)
+            q = int(q_text)
+
+            # Проверка, являются ли p и q простыми
+            if not sympy.isprime(p):
+                p = sympy.randprime(2**10, 2**11)
+                self.ui.prime_p.setText(str(p))
+            if not sympy.isprime(q):
+                q = sympy.randprime(2**10, 2**11)
+                self.ui.prime_q.setText(str(q))
+
+            self.rsa = RSA(p, q)
+            p, q, n, e, d = self.rsa.generate_keys()
+            self.ui.public_n.setText(str(n))
+            self.ui.phi_n.setText(str(self.rsa.phi))
+            self.ui.public_e.setText(str(e))
+            self.ui.private_d.setText(str(d))
+        except ValueError as ve:
+            QMessageBox.critical(self, "Ошибка", str(ve))
+
+    def encrypt_message(self):
+        try:
+            message_text = self.ui.message_to_encrypt.text()
+            if not message_text.isdigit():
+                raise ValueError("Сообщение для шифрования должно быть целым числом")
+            message = int(message_text)
+            ciphertext = self.rsa.encrypt(message)
+            self.ui.encrypted_message.setText(str(ciphertext))
+        except ValueError as ve:
+            QMessageBox.critical(self, "Ошибка", str(ve))
+
+    def save_keys(self):
+        try:
+            n_text = self.ui.public_n.text()
+            if not n_text.isdigit():
+                raise ValueError("Ключ n должен быть целым числом")
+            options = QFileDialog.Options()
+            filename, _ = QFileDialog.getSaveFileName(
+                self,
+                "Сохранить ключи",
+                "",
+                "Text Files (*.txt);;All Files (*)",
+                options=options,
+            )
+            if filename:
+                with open(filename, "w") as file:
+                    file.write(f"n: {n_text}\n")
+        except ValueError as ve:
+            QMessageBox.critical(self, "Ошибка", str(ve))
+
+    def save_encrypted_message(self):
+        try:
+            encrypted_message_text = self.ui.encrypted_message.text()
+            if not encrypted_message_text.isdigit():
+                raise ValueError("Зашифрованное сообщение должно быть целым числом")
+            options = QFileDialog.Options()
+            filename, _ = QFileDialog.getSaveFileName(
+                self,
+                "Сохранить зашифрованное сообщение",
+                "",
+                "Text Files (*.txt);;All Files (*)",
+                options=options,
+            )
+            if filename:
+                with open(filename, "w") as file:
+                    file.write(encrypted_message_text)
+        except ValueError as ve:
+            QMessageBox.critical(self, "Ошибка", str(ve))
+
+    def load_keys(self):
+        try:
+            options = QFileDialog.Options()
+            filename, _ = QFileDialog.getOpenFileName(
+                self,
+                "Загрузить ключи",
+                "",
+                "Text Files (*.txt);;All Files (*)",
+                options=options,
+            )
+            if filename:
+                with open(filename, "r") as file:
+                    key_data = file.read().strip()
+                    if not key_data.startswith("n: "):
+                        raise ValueError("Некорректный формат файла ключей")
+
+                    n_value = key_data.split(": ")[1].strip()
+                    if not n_value.isdigit():
+                        raise ValueError("Ключ n должен быть целым числом")
+
+                    self.ui.receiver_public_n.setText(n_value)
+        except ValueError as ve:
+            QMessageBox.critical(self, "Ошибка", str(ve))
+
+    def load_encrypted_message(self):
+        try:
+            options = QFileDialog.Options()
+            filename, _ = QFileDialog.getOpenFileName(
+                self,
+                "Загрузить зашифрованное сообщение",
+                "",
+                "Text Files (*.txt);;All Files (*)",
+                options=options,
+            )
+            if filename:
+                with open(filename, "r") as file:
+                    encrypted_message_text = file.read().strip()
+                    if not encrypted_message_text.isdigit():
+                        raise ValueError(
+                            "Зашифрованное сообщение должно быть целым числом"
+                        )
+                    self.ui.receiver_encrypted_message.setText(encrypted_message_text)
+        except ValueError as ve:
+            QMessageBox.critical(self, "Ошибка", str(ve))
+
+    def decrypt_message(self):
+        try:
+            ciphertext_text = self.ui.receiver_encrypted_message.text()
+            d_text = self.ui.receiver_private_d.text()
+            n_text = self.ui.receiver_public_n.text()
+            if (
+                not ciphertext_text.isdigit()
+                or not d_text.isdigit()
+                or not n_text.isdigit()
+            ):
+                raise ValueError("Все значения должны быть целыми числами")
+            ciphertext = int(ciphertext_text)
+            d = int(d_text)
+            n = int(n_text)
+            self.rsa.d = d
+            self.rsa.n = n
+            plaintext = self.rsa.decrypt(ciphertext)
+            self.ui.decrypted_message.setText(str(plaintext))
+        except ValueError as ve:
+            QMessageBox.critical(self, "Ошибка", str(ve))
+
+    def generate_start_state(self) -> None:
+        random_seed = random.getrandbits(32)
+        self.ui.start_state_input.setText(hex(random_seed)[2:])
+
+    def generate_and_display(self) -> None:
+        seed_value = int(self.ui.start_state_input.text(), 16)
+        iterations = int(self.ui.iterations_input.text())
+
+        nlfsr = NLFSR(seed_value)
+
+        self.ui.output_text.clear()
+        self.ui.output_text.append("Generated:   Iteration #1\n")
+        self.ui.output_text.append(f"             {seed_value:032b}\n")
+
+        for i in range(2, iterations + 1):
+            new_number = nlfsr.shift_and_xor()
+            self.ui.output_text.append(f"Shifted:     Iteration #{i}\n")
+            self.ui.output_text.append(f"             {new_number:032b}\n")
+
+        remembered_bits = nlfsr.get_shifted_bits()
+        self.ui.output_text.append("\nRemembered Bits: \n")
+        self.ui.output_text.append("".join(str(bit) for bit in remembered_bits))
+
+    def save_seed(self) -> None:
+        options = QFileDialog.Options()
+        filename, _ = QFileDialog.getOpenFileName(
+            None,
+            "Выбрать текстовый файл",
+            "./information_security/text",
+            "Text Files (*.txt);;All Files (*)",
+            options=options,
+        )
+        if filename:
+            with open(filename, "w", encoding="utf-8") as file:
+                text = self.ui.start_state_input.text()
+                file.write(text)
+
+    def prime_check(self) -> None:
+        input_number: int = int(self.ui.prime_input_number.text())
+        alg = RabinMiller()
+        is_prime = alg.is_prime(input_number)
+        if is_prime:
+            result = "Число простое"
+        else:
+            result = "Число не простое"
+        self.ui.prime_result_output.setText(result)
+
+    def prime_testing(self) -> None:
+        def generate_primes(digits: int) -> int:
+            """Генерация случайного простого числа заданной разрядности."""
+            lower_bound = 10 ** (digits - 1)
+            upper_bound = 10**digits - 1
+            return randprime(lower_bound, upper_bound)
+
+        alg = RabinMiller()
+        digits_range = range(1, 6)
+        times = {}
+        result = ""
+        for digits in digits_range:
+            prime = generate_primes(digits)
+            start_time = time.perf_counter()
+            test_results = alg.is_prime(prime)
+            end_time = time.perf_counter()
+            elapsed_time = end_time - start_time
+            times[digits] = elapsed_time
+            is_prime = "Простое" if test_results else "Не простое"
+            result += f"Разрядов: {digits}. Число: {prime} - {is_prime}. Длительность: {elapsed_time}\n\n"
+
+        # Визуализация результатов
+        plt.plot(list(times.keys()), list(times.values()), marker="x")
+        plt.xlabel("Number of Digits")
+        plt.ylabel("Average Time per Prime Check (s)")
+        plt.title("Performance of Rabin-Miller Prime Test by Digits")
+        plt.grid(True)
+        print(self.ui.prime_visualize.isChecked())
+        if self.ui.prime_visualize.isChecked():
+            plt.show()
+
+        self.ui.prime_testing_output.setText(result)
 
     def decompose_gcd(self) -> None:
         field_a: int = int(self.ui.field_A.text())
